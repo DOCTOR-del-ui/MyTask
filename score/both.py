@@ -106,10 +106,6 @@ def get_inception_and_fid_score(images, fid_cache, num_images=None,
         s1 = torch_cov(fid_acts, rowvar=False)
         m2 = torch.tensor(m2).to(m1.dtype).to(device)
         s2 = torch.tensor(s2).to(s1.dtype).to(device)
-        print(torch.any(torch.isnan(m1)), torch.any(torch.isinf(m1)))
-        print(torch.any(torch.isnan(s1)), torch.any(torch.isinf(s1)))
-        print(torch.any(torch.isnan(m2)), torch.any(torch.isinf(m2)))
-        print(torch.any(torch.isnan(s2)), torch.any(torch.isinf(s2)))
     else:
         m1 = np.mean(fid_acts, axis=0)
         s1 = np.cov(fid_acts, rowvar=False)
