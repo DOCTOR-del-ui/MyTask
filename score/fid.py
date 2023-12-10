@@ -51,11 +51,13 @@ def sqrt_newton_schulz(A, numIters, dtype=None):
         dim = A.shape[1]
         normA = A.mul(A).sum(dim=1).sum(dim=1).sqrt()
         Y = A.div(normA.view(batchSize, 1, 1).expand_as(A))
+        print("normA", torch.any(torch.isnan(normA)), torch.any(torch.isinf(normA)))
         K = torch.eye(dim, dim).view(1, dim, dim).repeat(batchSize, 1, 1)
         Z = torch.eye(dim, dim).view(1, dim, dim).repeat(batchSize, 1, 1)
         K = K.type(dtype)
         Z = Z.type(dtype)
         for i in range(numIters):
+            print(i, torch.any(torch.isnan(Y)), torch.any(torch.isinf(Y)))
             T = 0.5 * (3.0 * K - Z.bmm(Y))
             Y = Y.bmm(T)
             Z = T.bmm(Z)
